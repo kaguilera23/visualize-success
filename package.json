@@ -1,0 +1,25 @@
+{
+  "name": "visualize-success",
+  "version": "1.0.0",
+  "description": "Even if there are hundreds of members on a team of developers, they all have one common goal: create an application that's successful. In order to do so, you must start at the very base of your success pyramid, your team. With Visual Success, you're able to see your departments, roles, and employess, and you may also edit any of the displayed information.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaguilera23/visualize-success.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaguilera23/visualize-success/issues"
+  },
+  "homepage": "https://github.com/kaguilera23/visualize-success#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.1.2"
+  }
+}
