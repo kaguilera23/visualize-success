@@ -1,5 +1,15 @@
 const inquirer = require("inquirer")
 const ctab = require("console.table")
+const mysql = require("mysql2")
+
+const db = mysql.createConnection(
+    {
+      host: 'localhost',
+      user: 'root',
+      password: 'Ac3t@z0lmycIn*',
+      database: 'team_db'
+    },
+  );
 
 const menuQuestion = {
     type: "list",
@@ -10,4 +20,8 @@ const menuQuestion = {
 
 inquirer.prompt(menuQuestion).then((answer) => {
     console.log(answer)
+})
+
+app.listen(PORT, () => {
+    console.log("Now listening")
 })
