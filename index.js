@@ -2,14 +2,6 @@ const inquirer = require("inquirer")
 const ctab = require("console.table")
 const mysql = require("mysql2")
 
-const db = mysql.createConnection(
-    {
-      host: 'localhost',
-      user: 'root',
-      password: 'Ac3t@z0lmycIn*',
-      database: 'team_db'
-    },
-  );
 
 const menuQuestion = {
     type: "list",
@@ -18,10 +10,44 @@ const menuQuestion = {
     choices: ["View All Departments", "View All Roles", "View All Employees", "Add A Department", "Add A Role", "Add an Employee", "Update Employee Role"]
 }
 
+
+const db = mysql.createConnection(
+  {
+    host: 'localhost',
+    user: 'root',
+    password: 'lovebu&',
+    database: 'team_db'
+  },   console.log(`Connected to the classlist_db database.`)
+);
+
 inquirer.prompt(menuQuestion).then((answer) => {
-    console.log(answer)
+    switch(answer.menu) {
+        case "View All Departments":
+          db.promise().query(`
+          SELECT * FROM department`)
+      .then(data => {
+          console.table(data[0])
+          })  
+        break;
+
+        case "View All Roles":
+          db.promise().query(`
+          SELECT * FROM role`)
+      .then(data => {
+          console.table(data[0])
+          }) 
+        break;
+
+        case "View All Employees":
+          db.promise().query(`
+          SELECT * FROM employee`)
+      .then(data => {
+          console.table(data[0])
+          }) 
+        break;
+
+        default:
+            console.log("Help!")
+    }
 })
 
-app.listen(PORT, () => {
-    console.log("Now listening")
-})
