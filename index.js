@@ -25,11 +25,6 @@ const addDepartmentQuestions = {
   message: "What is the name of your new department? "
 }
 
-
-
-
-
-
 function menu() {
   inquirer.prompt(menuQuestion).then((answer) => {
     switch(answer.menu) {
