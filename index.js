@@ -25,6 +25,52 @@ const addDepartmentQuestions = {
   message: "What is the name of your new department? "
 }
 
+
+// const addRoleQuestionsFunction = function() {
+//   db.promise().query(`SELECT departments.name FROM departments`)
+//     .then((data) => {
+//       const nameArray = data[0].map((kyle) => {
+//         return kyle.name
+//       }   
+//       )
+//       return (nameArray)
+//     })
+//     console.log(addRoleQuestionsFunction())
+
+// }
+
+
+
+// [
+//   {
+//     type: "input",
+//     name: "role_name",
+//     message: "What is the name of the role?"
+//   }, 
+//   {
+//     type: "input",
+//     name: "role_salary",
+//     message: "What is the salary of the role?"
+//   },
+//   {
+//     type: "list",
+//     name: "role_department",
+//     message: "What department does the role belong to?",
+//     choices: [
+//       'Engineering',
+//       'Finance',
+//       'Legal',
+//       'Sales',
+//       'Engineering',
+//       'Finance',
+//       'Legal',
+//       'Sales',
+//       "Kyle's Departments",
+//       "Babe's Departamento"
+//     ]
+//   }
+// ]
+
 function menu() {
   inquirer.prompt(menuQuestion).then((answer) => {
     switch(answer.menu) {
@@ -42,6 +88,11 @@ function menu() {
 
         case "Add A Department":
           aad();
+          break;
+
+        case "Add A Role":
+          aar();
+          break;
 
         default:
             console.log("No Data Found, Please Make Your Selection Again")
@@ -71,14 +122,21 @@ function vae() {
 
 function aad() {
   inquirer.prompt(addDepartmentQuestions).then((answers) => {
-    console.log(answers)
-    console.log()
   db.promise().query(`INSERT INTO departments (name) VALUES (${JSON.stringify(answers.department)})`)
     .then(
       console.log("Your Department Has Been Added!")
     )    
   })
-
 }
 
-menu();
+function aar() {
+  inquirer.prompt(addRoleQuestions).then((answers) => {
+    console.log(answers)
+    // db.promise().query(`INSERT INTO departments (name) VALUES (${JSON.stringify(answers.department)})`)
+    //   .then(
+    //     console.log("Your Department Has Been Added!")
+    //   )    
+    })
+}
+
+// menu();
