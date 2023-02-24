@@ -7,7 +7,7 @@ const db = mysql.createConnection(
   {
     host: 'localhost',
     user: 'root',
-    password: 'Ac3t@z0lmycIn*',
+    password: 'lovebu&',
     database: 'team_db'
   },   console.log(`Connected to the classlist_db database.`)
 );
@@ -26,50 +26,6 @@ const addDepartmentQuestions = {
 }
 
 
-// const addRoleQuestionsFunction = function() {
-//   db.promise().query(`SELECT departments.name FROM departments`)
-//     .then((data) => {
-//       const nameArray = data[0].map((kyle) => {
-//         return kyle.name
-//       }   
-//       )
-//       return (nameArray)
-//     })
-//     console.log(addRoleQuestionsFunction())
-
-// }
-
-
-
-// [
-//   {
-//     type: "input",
-//     name: "role_name",
-//     message: "What is the name of the role?"
-//   }, 
-//   {
-//     type: "input",
-//     name: "role_salary",
-//     message: "What is the salary of the role?"
-//   },
-//   {
-//     type: "list",
-//     name: "role_department",
-//     message: "What department does the role belong to?",
-//     choices: [
-//       'Engineering',
-//       'Finance',
-//       'Legal',
-//       'Sales',
-//       'Engineering',
-//       'Finance',
-//       'Legal',
-//       'Sales',
-//       "Kyle's Departments",
-//       "Babe's Departamento"
-//     ]
-//   }
-// ]
 
 function menu() {
   inquirer.prompt(menuQuestion).then((answer) => {
@@ -130,13 +86,51 @@ function aad() {
 }
 
 function aar() {
-  inquirer.prompt(addRoleQuestions).then((answers) => {
-    console.log(answers)
-    // db.promise().query(`INSERT INTO departments (name) VALUES (${JSON.stringify(answers.department)})`)
-    //   .then(
-    //     console.log("Your Department Has Been Added!")
-    //   )    
-    })
-}
 
-// menu();
+  let someArry = "";
+  db.promise().query(`SELECT departments.name FROM departments`)
+    .then((data) => {
+      const nameArray = data[0].map((kyle) => {
+        return (kyle.name)
+      })
+      console.log(nameArray)
+
+      inquirer.prompt([
+        {
+          type: "input",
+          name: "role_name",
+          message: "What is the name of the role?"
+        }, 
+        {
+          type: "input",
+          name: "role_salary",
+          message: "What is the salary of the role?"
+        },
+        {
+          type: "list",
+          name: "role_department",
+          message: "What department does the role belong to?",
+          choices: nameArray
+        }
+      ]).then((answers) => {
+        console.log(answers)
+
+        const {role_name, role_salary, role_department} =  answers
+        console.log(role_name, role_salary, role_department)
+
+        const kayla = db.promise().query(`SELECT department_id FROM departments JOIN role_department=departments_id`)
+
+        db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES (${JSON.stringify(role_name)}, ${role_salary}, ${JSON.stringify(role_department)})`)
+          .then(
+            console.log("Your Role Has Been Added!")
+          )    
+
+    })
+
+  })}
+
+
+
+menu();
+
+//trying to get department id from department name and insert into table
