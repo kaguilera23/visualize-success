@@ -22,10 +22,8 @@ const menuQuestion = {
 const addDepartmentQuestions = {
   type: "input",
   name: "department",
-  message: "What is the name of your new department? "
+  message: "What is the name of your new department?"
 }
-
-
 
 function menu() {
   inquirer.prompt(menuQuestion).then((answer) => {
@@ -48,6 +46,10 @@ function menu() {
 
         case "Add A Role":
           aar();
+          break;
+
+        case "Add an Employee":
+          aae();
           break;
 
         default:
@@ -126,7 +128,48 @@ function aar() {
     })
   })}
 
+  function aae() {
+    // first get all of the current roles to enter as the role they belong to
+    db.promise().query(`SELECT * FROM roles`)
+      .then((data) => {
+        const roleArray = data[0].map((kyle) => {
+          return (`${kyle.id} ${kyle.title}`)
+        })
+  
+        // ask question regarding new employee
+        inquirer.prompt([
+          {
+            type: "input",
+            name: "first_name",
+            message: "What is the employee's first name?"
+          }, 
+          {
+            type: "input",
+            name: "last_name",
+            message: "What is the employee's last name?"
+          },
+          {
+            type: "list",
+            name: "role_id",
+            message: "What role does the employee belong to?",
+            choices: roleArray
+          }
+        ]).then((answers) => {
+  
+          const {first_name, last_name, role_id} =  answers
+          
+          // takes the role department id to enter into table instead of department name
+          const sugar = role_id.split(" ")
+          const titus = parseInt(sugar[0])
 
+          console.log(first_name, last_name, titus)
+  
+          db.promise().query(`INSERT INTO employees (first_name, last_name, role_id) VALUES (${JSON.stringify(first_name)}, ${JSON.stringify(last_name)}, ${titus})`)
+            .then(
+              console.log("Your Employee Has Been Added!")
+            )    
+      })
+    })}
 
 menu();
 
