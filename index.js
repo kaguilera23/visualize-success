@@ -86,15 +86,14 @@ function aad() {
 }
 
 function aar() {
-
-  let someArry = "";
-  db.promise().query(`SELECT departments.name FROM departments`)
+  // first get all of the current departments to enter as choices
+  db.promise().query(`SELECT * FROM departments`)
     .then((data) => {
       const nameArray = data[0].map((kyle) => {
-        return (kyle.name)
+        return (`${kyle.id} ${kyle.name}`)
       })
-      console.log(nameArray)
 
+      // ask question regarding new role
       inquirer.prompt([
         {
           type: "input",
@@ -113,20 +112,18 @@ function aar() {
           choices: nameArray
         }
       ]).then((answers) => {
-        console.log(answers)
 
         const {role_name, role_salary, role_department} =  answers
-        console.log(role_name, role_salary, role_department)
 
-        const kayla = db.promise().query(`SELECT department_id FROM departments JOIN role_department=departments_id`)
+        // takes the role department id to enter into table instead of department name
+        const sugar = role_department.split(" ")
+        const titus = parseInt(sugar[0])
 
-        db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES (${JSON.stringify(role_name)}, ${role_salary}, ${JSON.stringify(role_department)})`)
+        db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES (${JSON.stringify(role_name)}, ${role_salary}, ${titus})`)
           .then(
             console.log("Your Role Has Been Added!")
           )    
-
     })
-
   })}
 
 
