@@ -2,14 +2,13 @@ const inquirer = require("inquirer")
 const ctab = require("console.table")
 const mysql = require("mysql2")
 
-
 const db = mysql.createConnection(
   {
     host: 'localhost',
     user: 'root',
     password: 'lovebu&',
     database: 'team_db'
-  },   console.log(`Connected to the classlist_db database.`)
+  },   console.log(`Connected to the team_db database.`)
 );
 
 const menuQuestion = {
@@ -27,9 +26,10 @@ const addDepartmentQuestions = {
 
 function menu() {
   inquirer.prompt(menuQuestion).then((answer) => {
+
     switch(answer.menu) {
         case "View All Departments":
-          vad();  
+          vad();
         break;
 
         case "View All Roles":
@@ -60,6 +60,7 @@ function menu() {
             console.log("No Data Found, Please Make Your Selection Again")
     }
 })}
+
 
 function vad() {
   db.promise().query(`SELECT * FROM departments`)
@@ -156,7 +157,7 @@ function aae() {
          {
            type: "list",
            name: "role_id",
-           message: "What role does the employee belong to?",
+           message: "What is the employee's role?",
            choices: roleArray
          }
        ]).then((answers) => {
@@ -166,7 +167,6 @@ function aae() {
          // takes the role department id to enter into table instead of department name
          const sugar = role_id.split(" ")
          const titus = parseInt(sugar[0])
-         console.log(first_name, last_name, titus)
  
          db.promise().query(`INSERT INTO employees (first_name, last_name, role_id) VALUES (${JSON.stringify(first_name)}, ${JSON.stringify(last_name)}, ${titus})`)
            .then(
@@ -179,9 +179,7 @@ function aae() {
 function uer() {
   db.promise().query(`SELECT * FROM employees`)
   .then((data) => {
-    console.log(data[0])
     const employeeArray = data[0].map((employee) => {
-    console.log(employee.id, employee.first_name, employee.last_name)
     return (`${employee.id} ${employee.first_name} ${employee.last_name}`)
     })
 
@@ -210,8 +208,6 @@ function uer() {
       const splitRoleId = roles.split(" ")
       const updateEmployee = parseInt(splitEmployeeId[0])
       const updateRoleId = parseInt(splitRoleId[0])
-      console.log(updateEmployee)
-      console.log(updateRoleId)
 
       db.promise().query(`UPDATE employees SET role_id = ${updateRoleId} WHERE id = ${updateEmployee}`).then(console.log("Employee has Been Updated!"))
     })

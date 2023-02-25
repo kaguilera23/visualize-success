@@ -15,6 +15,6 @@ VALUES
 INSERT INTO employees (id, first_name, last_name, role_id)
 VALUES
 (1, "John", "Doe", 1),
-(2, "Sugar", "Bear", 2),
-(3, "Titus", "Boy", 3),
+(2, "Kristen", "Collins", 2),
+(3, "Jane", "Rodriguez", 3),
 (4, "Kyle", "Feener", 4);
